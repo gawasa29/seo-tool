@@ -43,8 +43,9 @@ export async function keywordResearch(prevState: State, formData: FormData) {
         message: "At least one keyword is required.",
       }
     }
-    const username = "yusei-sagawa@getonereach.app"
-    const password = "fce8fbab56a922e9"
+
+    const username = process.env.USERNAME
+    const password = process.env.PASSWORD
 
     let api = new client.KeywordsDataApi("https://api.dataforseo.com", {
       fetch: (url: RequestInfo, init?: RequestInit): Promise<Response> => {
