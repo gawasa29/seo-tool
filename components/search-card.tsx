@@ -8,11 +8,20 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 
+import { keywordResearch, State } from "@/lib/actions"
+import { useActionState } from "react"
 import { Button } from "./ui/button"
 import { Field, FieldGroup, FieldLabel } from "./ui/field"
 import { Input } from "./ui/input"
+import { Spinner } from "./ui/spinner"
 
 export function SearchCard() {
+  const initialState: State = { message: null, errors: {} }
+  const [state, formAction, isPending] = useActionState(
+    keywordResearch,
+    initialState
+  )
+
   return (
     <Card className="w-full max-w-md">
       <CardHeader>
@@ -22,7 +31,7 @@ export function SearchCard() {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <form>
+        <form action={formAction}>
           <FieldGroup>
             <Field>
               <FieldLabel htmlFor="search">Keyword</FieldLabel>
@@ -36,10 +45,24 @@ export function SearchCard() {
             </Field>
 
             <Field>
-              <Button type="submit">Search</Button>
+              <Button type="submit" disabled={isPending}>
+                {isPending ? (
+                  <>
+                    <Spinner />
+                    Searching...
+                  </>
+                ) : (
+                  "Search"
+                )}
+              </Button>
             </Field>
           </FieldGroup>
         </form>
+        <div id="result" aria-live="polite" aria-atomic="true">
+          {state.message && (
+            <p className="whitespace-pre-wrap pt-4">{state.message}</p>
+          )}
+        </div>
       </CardContent>
     </Card>
   )
