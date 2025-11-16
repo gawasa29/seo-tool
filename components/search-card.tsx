@@ -43,7 +43,14 @@ export function SearchCard() {
                 required
               />
             </Field>
-
+            <div id="url-error" aria-live="polite" aria-atomic="true">
+              {state.errors?.keyword &&
+                state.errors.keyword.map((error: string) => (
+                  <p className="text-sm text-red-500" key={error}>
+                    {error}
+                  </p>
+                ))}
+            </div>
             <Field>
               <Button type="submit" disabled={isPending}>
                 {isPending ? (
