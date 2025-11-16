@@ -1,8 +1,10 @@
+import { SearchCard } from "@/components/search-card"
+
 export default function Page() {
   return (
     <div>
       <main className="flex min-h-screen items-center justify-center">
-        <h1>Search Page</h1>
+        <SearchCard />
       </main>
     </div>
   )
